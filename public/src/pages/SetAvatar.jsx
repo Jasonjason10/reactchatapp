@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { setAvatarRoute } from "../utils/APIRoutes";
+import './cssPages/SetAvatar.css';
 export default function SetAvatar() {
   const api = `https://api.multiavatar.com/45678943`;
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ export default function SetAvatar() {
     theme: "dark",
   };
 
+
+  // if you have not logged in it will navigate to the login page
   useEffect( () => {
     const navigationTo = async () =>{
        if (!localStorage.getItem('chat-app-user'))
@@ -55,6 +58,7 @@ export default function SetAvatar() {
     }
   };
 
+  //Gives a random set of avatars to choose from
   useEffect(() => {
     const fetchData = async () => {
       const data = [];
@@ -77,11 +81,11 @@ export default function SetAvatar() {
   return (
     <>
       {isLoading ? (
-        <Container>
+        <div className="SetAvatar">
           <img src={loader} alt="loader" className="loader" />
-        </Container>
+          </div>
       ) : (
-        <Container>
+        <div className="SetAvatar">
           <div className="title-container">
             <h1>Pick an Avatar as your profile picture</h1>
           </div>
@@ -107,7 +111,7 @@ export default function SetAvatar() {
             Set as Profile Picture
           </button>
           <ToastContainer />
-        </Container>
+          </div>
       )}
     </>
   );

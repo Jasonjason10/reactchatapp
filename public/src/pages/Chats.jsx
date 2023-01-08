@@ -7,6 +7,7 @@ import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 import ChatContainer from "../components/ChatContainer";
 import { io } from "socket.io-client";
+import './cssPages/Chat.css'
 
 
 export default function Chats() {
@@ -17,7 +18,7 @@ export default function Chats() {
   const [currentChat, setCurrentChat] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
   
-
+//If there is no user the browser will send you to the login page
   useEffect( ()=>{
     const navigationTo = async () => {
       if (!localStorage.getItem('chat-app-user'))
@@ -32,6 +33,7 @@ export default function Chats() {
     navigationTo();
    }, []);
 
+   //sets a real time connection between client and server
    useEffect(()=>{
     if(currentUser){
       socket.current = io(host);
@@ -39,11 +41,14 @@ export default function Chats() {
     }
    },[currentUser]);
 
+   //If the user has an avtar it will add you to the contact list if not you will be send to the set avatar screen
   useEffect( () => {
     const getCurrentUser = async()=>{
       if( currentUser)  {
       if(currentUser.isAvatarImageSet){
+        console.log(currentUser);
         const data = await  axios.get(`${allUsersRoute}/${currentUser._id}`);
+        console.log(data.data);
         setContacts(data.data);
       } else{
         navigate('/setAvatar');
@@ -58,7 +63,7 @@ export default function Chats() {
   }
 
   return (
-    <Container>
+    <div className="Chat">
       <div className="container">
         <Contacts contacts={contacts} currentUser={currentUser}  changeChat={handleChatChange}/>
         { isLoaded &&
@@ -67,7 +72,7 @@ export default function Chats() {
           <ChatContainer currentChat={currentChat} socket={socket} currentUser={currentUser} />
         }
       </div>
-    </Container>
+    </div>
   )
 }
 

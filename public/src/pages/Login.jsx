@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"
 import { loginRoute } from '../utils/APIRoutes';
 
+
 const Login = () => {
   const navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const Login = () => {
     theme: "dark"
   };
 
+//if the user is logged in it will send so to the chat
   useEffect(() => {
     if(localStorage.getItem('chat-app-user')) {
       navigate('/');
